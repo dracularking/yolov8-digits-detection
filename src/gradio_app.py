@@ -36,4 +36,4 @@ gr.Interface(
     ),
     outputs=gr.Image(type="numpy", shape=(1280, 640)),
     examples=examples,
-).launch(server_name="0.0.0.0")
+).launch(server_name="127.0.0.1")

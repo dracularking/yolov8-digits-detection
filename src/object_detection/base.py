@@ -1,4 +1,5 @@
 from src.results import DetectionResults
+from src.utils.utils import group_and_merge_boxes # Import the new function
 import numpy as np
 from abc import abstractmethod
 
@@ -113,4 +114,10 @@ class BaseObjectDetector:
         boxes_xywhn = postprocessed["boxes_xywhn"]
         if len(class_scores) == 0:
             return DetectionResults(image)
-        return DetectionResults(image, boxes_xywhn, class_ids, class_scores)
+
+        # Group and merge boxes for multi-digit detection
+        merged_boxes_xywhn, merged_class_ids, merged_class_scores = group_and_merge_boxes(
+            boxes_xywhn, class_ids, class_scores
+        )
+
+        return DetectionResults(image, merged_boxes_xywhn, merged_class_ids, merged_class_scores)

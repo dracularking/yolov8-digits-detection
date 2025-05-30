@@ -61,7 +61,7 @@ class DetectionResults:
             bboxes_xywhn=self.boxes.xywhn,
             class_ids=self.class_ids,
             confidences=self.conf,
-            id2name=ID2NAME,
+            # id2name=ID2NAME, # Removed id2name
         )
         if plot:
             plt.figure(figsize=(12, 12))

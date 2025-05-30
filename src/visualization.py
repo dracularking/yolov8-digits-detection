@@ -124,9 +124,9 @@ def plot_bbox(
 def plot_yolo_labels(
     image: np.ndarray,
     bboxes_xywhn: np.ndarray,
-    class_ids: np.ndarray,
+    class_ids: np.ndarray, # This will now be a list of strings (e.g., "301")
     confidences: np.ndarray | None = None,
-    id2name: dict[int, str] | None = None,
+    # id2name: dict[int, str] | None = None, # No longer needed as class_ids are strings
     plot: bool = False,
 ) -> np.ndarray:
     """Plot predicted boxes and labels for an image.
@@ -143,8 +143,6 @@ def plot_yolo_labels(
     Returns:
         np.ndarray: Image with ploted boxes
     """
-    if id2name is None:
-        id2name = {class_id: str(class_id) for class_id in class_ids}
     boxes_img = image.copy()
     img_h, img_w, img_c = boxes_img.shape
     if not isinstance(bboxes_xywhn, np.ndarray):
@@ -153,9 +151,8 @@ def plot_yolo_labels(
         confidences = [None] * len(class_ids)
     bboxes_xywh = xywhn2xywh(bboxes_xywhn, h=img_h, w=img_w)
     bboxes_xyxy = xywh2xyxy(bboxes_xywh).tolist()
-    for bbox, class_id, conf in zip(bboxes_xyxy, class_ids, confidences):
-        class_name = id2name[class_id]
-        color = colors(class_id)
+    for bbox, class_name, conf in zip(bboxes_xyxy, class_ids, confidences): # class_ids is now class_name string
+        color = (0, 255, 0)  # Set color to green (RGB)
         boxes_img = plot_bbox(boxes_img, bbox, class_name, conf, color, txt_color=(0, 0, 0))
     if plot:
         plt.figure(figsize=(6, 6))
