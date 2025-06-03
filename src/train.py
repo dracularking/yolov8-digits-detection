@@ -8,7 +8,7 @@ def export_model(ckpt_path: str, imgsz: tuple[int, int] = (256, 256), format: st
 
 
 def train_model(
-    ckpt_path: str = "yolov8n.pt",
+    ckpt_path: str = "models/yolov8n.pt",
     epochs: int = 50,
     imgsz: tuple[int, int] = (256, 256),
     batch: int = 128,
@@ -17,18 +17,18 @@ def train_model(
 ):
     if train:
         model = YOLO(ckpt_path)
-        model.train(data="yolo_HWD+.yaml", epochs=epochs, imgsz=imgsz, device=0, batch=batch)
+        model.train(data="datasets/yolo_HWD+.yaml", epochs=epochs, imgsz=imgsz, device=0, batch=batch)
     if export:
         export_model(ckpt_path, imgsz)
 
 
 if __name__ == "__main__":
-    CKPT_PATH = "yolov8n.pt"
+    CKPT_PATH = "models/yolov8n.pt"
     # CKPT_PATH = ROOT / "runs/detect/train4/weights/best.pt"
 
     EPOCHS = 100
     IMGSZ = (256, 256)
     BATCH = 128
     train_model(
-        ckpt_path=CKPT_PATH, epochs=EPOCHS, imgsz=IMGSZ, batch=BATCH, train=False, export=True
+        ckpt_path=CKPT_PATH, epochs=EPOCHS, imgsz=IMGSZ, batch=BATCH, train=True, export=True
     )
