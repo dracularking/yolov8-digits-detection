@@ -8,3 +8,6 @@
 
 ## 开始训练
 `poetry run python -m src.train`
+
+## 直接预测
+`python src/predict.py -i img/test/14.png --mode single --save`
